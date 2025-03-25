@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 24, 2025 at 05:18 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Mar 25, 2025 at 03:15 AM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -30,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -43,8 +44,8 @@ CREATE TABLE `comments` (
   `users_id` int(11) NOT NULL,
   `portofolio_id` int(11) NOT NULL,
   `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -56,26 +57,26 @@ CREATE TABLE `likes` (
   `id` int(11) NOT NULL,
   `users_id` int(11) NOT NULL,
   `portofolio_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `portofolios`
+-- Table structure for table `portfolios`
 --
 
-CREATE TABLE `portofolios` (
+CREATE TABLE `portfolios` (
   `id` int(11) NOT NULL,
   `users_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `status` smallint(3) DEFAULT 0,
+  `status` smallint(3) DEFAULT '0',
   `description` text NOT NULL,
   `image` varchar(255) NOT NULL,
   `github_link` varchar(255) NOT NULL,
   `website_link` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -86,7 +87,7 @@ CREATE TABLE `portofolios` (
 CREATE TABLE `tags` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -101,9 +102,9 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `profile_picture` varchar(255) NOT NULL,
   `bio` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated-at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -128,9 +129,9 @@ ALTER TABLE `likes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `portofolios`
+-- Indexes for table `portfolios`
 --
-ALTER TABLE `portofolios`
+ALTER TABLE `portfolios`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -168,9 +169,9 @@ ALTER TABLE `likes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `portofolios`
+-- AUTO_INCREMENT for table `portfolios`
 --
-ALTER TABLE `portofolios`
+ALTER TABLE `portfolios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
