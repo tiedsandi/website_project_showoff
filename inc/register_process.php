@@ -1,5 +1,5 @@
 <?php
-// Koneksi ke database (gantilah dengan detail koneksi Anda)
+
 include "../config/koneksi.php";
 
 if ($conn->connect_error) {
@@ -11,8 +11,24 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $confirm_password = $_POST['confirm_password'];
 
+// Validasi email
+$stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$stmt->store_result();
+
+if ($stmt->num_rows > 0) {
+    echo json_encode(['status' => 'error', 'message' => 'Email sudah terdaftar.']);
+    $stmt->close();
+    $conn->close();
+    exit();
+}
+
+$stmt->close();
+
 if ($password !== $confirm_password) {
     echo json_encode(['status' => 'error', 'message' => 'Password dan konfirmasi password tidak cocok.']);
+    $conn->close();
     exit();
 }
 
@@ -23,9 +39,9 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("sss", $name, $email, $hashed_password);
 
 if ($stmt->execute()) {
-    echo json_encode(['status' => 'success', 'message' => 'Register Successl!']);
+    echo json_encode(['status' => 'success', 'message' => 'Pendaftaran berhasil!']);
 } else {
-    echo json_encode(['status' => 'error', 'message' => 'Register Failed: ' . $stmt->error]);
+    echo json_encode(['status' => 'error', 'message' => 'Pendaftaran gagal: ' . $stmt->error]);
 }
 
 $stmt->close();

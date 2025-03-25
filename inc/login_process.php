@@ -21,12 +21,12 @@ if ($result->num_rows > 0) {
     if (password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['email'] = $user['email'];
-        echo json_encode(['status' => 'success', 'message' => 'Login success!']);
+        echo json_encode(['status' => 'success', 'message' => 'Login berhasil!']);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Wrong Password.']);
+        echo json_encode(['status' => 'error', 'message' => 'Password salah.']);
     }
 } else {
-    echo json_encode(['status' => 'error', 'message' => 'Email Not Found.']);
+    echo json_encode(['status' => 'error', 'message' => 'Email tidak ditemukan.']);
 }
 
 $stmt->close();

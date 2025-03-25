@@ -49,8 +49,13 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
     $(document).ready(function() {
+        let isToastActive = false; // Variabel untuk melacak status Toastify
+
         $('#registerForm').submit(function(e) {
             e.preventDefault();
+            if (isToastActive) return; // Jika Toastify sedang aktif, jangan kirim permintaan lagi
+            isToastActive = true; // Set status Toastify aktif
+
             var formData = $(this).serialize();
 
             $.ajax({
@@ -59,29 +64,39 @@
                 data: formData,
                 dataType: 'json',
                 success: function(response) {
+                    let toastConfig = {
+                        text: response.message,
+                        duration: 3000,
+                        callback: function() {
+                            isToastActive = false; // Reset status Toastify setelah pesan hilang
+                        }
+                    };
+
                     if (response.status === 'success') {
-                        Toastify({
-                            text: response.message,
-                            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-                            duration: 3000
-                        }).showToast();
+                        toastConfig.backgroundColor = "linear-gradient(to right, #00b09b, #96c93d)";
+                        Toastify(toastConfig).showToast();
                         setTimeout(function() {
                             window.location.href = "login.php";
                         }, 3000);
+                    } else if (response.status === 'error') {
+                        toastConfig.backgroundColor = "linear-gradient(to right, #ff5f6d, #ffc371)";
+                        Toastify(toastConfig).showToast();
                     } else {
-                        Toastify({
-                            text: response.message,
-                            backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
-                            duration: 3000
-                        }).showToast();
+                        toastConfig.backgroundColor = "red";
+                        toastConfig.text = "Terjadi kesalahan saat memproses permintaan.";
+                        Toastify(toastConfig).showToast();
                     }
                 },
                 error: function() {
-                    Toastify({
+                    let toastConfig = {
                         text: "Terjadi kesalahan saat memproses permintaan.",
                         backgroundColor: "red",
-                        duration: 3000
-                    }).showToast();
+                        duration: 3000,
+                        callback: function() {
+                            isToastActive = false;
+                        }
+                    };
+                    Toastify(toastConfig).showToast();
                 }
             });
         });

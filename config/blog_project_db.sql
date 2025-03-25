@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2025 at 04:53 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Mar 25, 2025 at 07:47 AM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -30,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -43,8 +44,8 @@ CREATE TABLE `comments` (
   `users_id` int(11) NOT NULL,
   `portofolio_id` int(11) NOT NULL,
   `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -56,7 +57,7 @@ CREATE TABLE `likes` (
   `id` int(11) NOT NULL,
   `users_id` int(11) NOT NULL,
   `portofolio_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -68,14 +69,14 @@ CREATE TABLE `portfolios` (
   `id` int(11) NOT NULL,
   `users_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `status` smallint(3) DEFAULT 0,
+  `status` smallint(3) DEFAULT '0',
   `description` text NOT NULL,
   `image` varchar(255) NOT NULL,
   `github_link` varchar(255) NOT NULL,
   `website_link` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -86,7 +87,7 @@ CREATE TABLE `portfolios` (
 CREATE TABLE `tags` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -97,22 +98,21 @@ CREATE TABLE `tags` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `email` varchar(191) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `is_admin` tinyint(3) NOT NULL DEFAULT 0,
   `profile_picture` varchar(255) DEFAULT NULL,
-  `bio` text DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `bio` text,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `is_admin`, `profile_picture`, `bio`, `created_at`, `updated_at`) VALUES
-(1, 'Mochamad Rizki', 'rizkilabs.dev@gmail.com', '$2y$10$6mmLRzro9WxRKjwGElK5AOR1eL..BeswGfgZH452my0sy3va7z4uC', 1, NULL, NULL, '2025-03-25 03:00:58', '2025-03-25 03:42:25'),
-(2, 'Fachran Sandi', 'fachransandi@gmail.com', '$2y$10$9TxxsOEcSZy/bCoo3BibGOQn0e0dSr9yDcmtgFagmBHw8emeUl5wy', 0, NULL, NULL, '2025-03-25 03:32:58', NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `profile_picture`, `bio`, `created_at`, `updated_at`) VALUES
+(1, 'Mochamad Rizki', 'rizkilabs.dev@gmail.com', '$2y$10$6mmLRzro9WxRKjwGElK5AOR1eL..BeswGfgZH452my0sy3va7z4uC', NULL, NULL, '2025-03-25 03:00:58', NULL),
+(2, 'Mochamad Rizki', 'emrizkidev@gmail.com', '$2y$10$ItYhuz.wBq6S34oIqd.tkew41xFTyambEwrAQI4tv70/Y4tU.8O12', NULL, NULL, '2025-03-25 06:35:19', NULL);
 
 --
 -- Indexes for dumped tables
@@ -152,7 +152,8 @@ ALTER TABLE `tags`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
