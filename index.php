@@ -11,7 +11,7 @@
   <main class="w-7xl mx-auto p-8">
     <header class="mb-8 flex justify-between  items-center">
       <h1 class="text-4xl font-bold text-indigo-500">
-        ShowBlog
+        BlogCase
       </h1>
       <!-- login -->
       <a href="login.php" class="bg-indigo-500 hover:bg-fuchsia-500 px-4 py-2 text-white rounded-xl text-lg">Login</a>
