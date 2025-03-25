@@ -100,13 +100,6 @@ CREATE TABLE `users` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-<<<<<<< HEAD:config/blog-project.sql
-  `profile_picture` varchar(255) NOT NULL,
-  `bio` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-=======
   `profile_picture` varchar(255) DEFAULT NULL,
   `bio` text,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -119,7 +112,6 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `profile_picture`, `bio`, `created_at`, `updated_at`) VALUES
 (1, 'Mochamad Rizki', 'rizkilabs.dev@gmail.com', '$2y$10$6mmLRzro9WxRKjwGElK5AOR1eL..BeswGfgZH452my0sy3va7z4uC', NULL, NULL, '2025-03-25 03:00:58', NULL);
->>>>>>> origin/auth:config/blog_project_db.sql
 
 --
 -- Indexes for dumped tables
