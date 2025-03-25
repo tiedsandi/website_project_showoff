@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body class="bg-gray-100 h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded shadow-md w-96">
         <h2 class="text-2xl font-semibold mb-4">Login</h2>
-        <form action="./inc/login/login_process.php" method="POST">
+        <form id="loginForm">
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                    Username
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                    Email
                 </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Username">
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="Email">
             </div>
             <div class="mb-6">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
@@ -32,5 +33,47 @@
             </div>
         </form>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#loginForm').submit(function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: 'inc/login_process.php',
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Toastify({
+                            text: response.message,
+                            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                            duration: 3000
+                        }).showToast();
+                        setTimeout(function() {
+                            window.location.href = "index.php"; // Alihkan ke index.php setelah login berhasil
+                        }, 3000);
+                    } else {
+                        Toastify({
+                            text: response.message,
+                            backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                            duration: 3000
+                        }).showToast();
+                    }
+                },
+                error: function() {
+                    Toastify({
+                        text: "Terjadi kesalahan saat memproses permintaan.",
+                        backgroundColor: "red",
+                        duration: 3000
+                    }).showToast();
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>

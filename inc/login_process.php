@@ -1,28 +1,34 @@
 <?php
-// Koneksi ke database (gantilah dengan detail koneksi Anda)
-$conn = new mysqli("localhost", "username", "password", "nama_database");
+session_start();
+
+include "../config/koneksi.php";
 
 if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
+    die(json_encode(['status' => 'error', 'message' => 'Koneksi database gagal.']));
 }
 
-// Ambil data dari formulir
-$username = $_POST['email'];
+$email = $_POST['email'];
 $password = $_POST['password'];
 
-// Query untuk memeriksa username dan password
-$sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
-$result = $conn->query($sql);
+$sql = "SELECT * FROM users WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // Login berhasil
-    session_start();
-    $_SESSION['username'] = $username;
-    header("Location: index.php"); // Alihkan ke halaman index
+    $user = $result->fetch_assoc();
+    if (password_verify($password, $user['password'])) {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['email'] = $user['email'];
+        echo json_encode(['status' => 'success', 'message' => 'Login success!']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Wrong Password.']);
+    }
 } else {
-    // Login gagal
-    echo "Username atau password salah.";
+    echo json_encode(['status' => 'error', 'message' => 'Email Not Found.']);
 }
 
+$stmt->close();
 $conn->close();
 ?>
