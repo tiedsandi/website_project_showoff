@@ -68,7 +68,10 @@
       </div>   
     </section>
 
-  
+    <!-- button load more -->
+    <div class="flex justify-center">
+       <button class="bg-indigo-500 hover:bg-fuchsia-500 px-4 py-2 text-white rounded-xl text-lg mt-8">Load More</button>
+     </div>
 
      <footer class="mt-8">
         <p class="text-center text-slate-400">© 2021 ShowBlog. All rights reserved.</p>
