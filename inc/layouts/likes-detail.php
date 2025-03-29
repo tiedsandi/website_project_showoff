@@ -17,36 +17,24 @@
 
 <!-- JavaScript -->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const likeBtn = document.getElementById("like-btn");
-    const likeIcon = document.getElementById("like-icon");
-    const likeCount = document.getElementById("like-count");
-    const portofolioId = 1; // Ganti dengan ID portfolio yang sedang ditampilkan
-
-    likeBtn.addEventListener("click", function () {
-      fetch("../actions/like.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `portofolio_id=${portofolioId}`
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === "success") {
-          if (data.liked) {
-            likeIcon.classList.remove("text-gray-500");
-            likeIcon.classList.add("text-red-500");
-          } else {
-            likeIcon.classList.remove("text-red-500");
-            likeIcon.classList.add("text-gray-500");
-          }
-          likeCount.textContent = data.like_count;
-        } else {
-          alert(data.message);
-        }
-      })
-      .catch(error => console.error("Error:", error));
-    });
+  $(document).ready(function () {
+    $("#like-btn").click(function () {
+        let portofolioId = 1; // Ganti dengan ID portfolio yang benar
+        
+          $.post("../actions/like.php", { portofolio_id: portofolioId }, function (data) {
+              let response = JSON.parse(data);
+              
+              if (response.status === "success") {
+                  if (response.liked) {
+                      $("#like-icon").removeClass("text-gray-500").addClass("text-red-500");
+                  } else {
+                      $("#like-icon").removeClass("text-red-500").addClass("text-gray-500");
+                  }
+                  $("#like-count").text(response.like_count);
+              } else {
+                  alert(response.message);
+              }
+          });
+      });
   });
 </script>
