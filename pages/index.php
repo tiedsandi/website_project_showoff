@@ -74,6 +74,6 @@
     <?php include '../inc/layouts/footer.php'; ?> 
   </main>
 
-  <script src="assets/js/script.js"></script>
+  <script src="../assets/js/script.js"></script>
 </body>
 </html>
