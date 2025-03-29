@@ -1,5 +1,5 @@
 <header class="mb-2 md:mb-8 flex justify-between items-center p-4 bg-white shadow-lg relative">
-    <h1 class="text-4xl font-bold text-indigo-500">BlogCase</h1>
+    <a href="index.php" class="text-4xl font-bold text-indigo-500">BlogCase</a>
 
     <!-- Mobile Menu -->
     <?php if(isset($_SESSION['name'])) : ?>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <?php else : ?>
-        <a href="login.php" class="bg-indigo-500 hover:bg-fuchsia-500 px-4 py-2 text-white rounded-xl text-lg">Login</a>
+        <a href="../login.php" class="bg-indigo-500 hover:bg-fuchsia-500 px-4 py-2 text-white rounded-xl text-lg">Login</a>
         <?php endif; ?>
     </nav>
 
@@ -41,9 +41,9 @@
         <p class="text-lg font-semibold text-gray-700 px-4"><?php echo $_SESSION['name']; ?></p>
         <a href="profile.php" class="block bg-gray-100 px-4 py-2 text-gray-700">Profile</a>
         <a href="dashboard.php" class="block bg-gray-100 px-4 py-2 text-gray-700">Dashboard</a>
-        <a href="logout.php" class="block bg-red-500 text-white px-4 py-2">Logout</a>
+        <a href="../logout.php" class="block bg-red-500 text-white px-4 py-2">Logout</a>
         <?php else : ?>
-        <a href="login.php" class="block bg-indigo-500 text-white px-4 py-2">Login</a>
+        <a href="../login.php" class="block bg-indigo-500 text-white px-4 py-2">Login</a>
         <?php endif; ?>
     </div>
 </header>
