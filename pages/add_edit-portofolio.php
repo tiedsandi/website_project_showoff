@@ -6,8 +6,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+  <script defer src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/choices.js/10.2.0/choices.min.css">
 </head>
 <body class="bg-gray-100">
   <main class="max-w-7xl mx-auto p-6 md:p-8">
@@ -51,15 +51,6 @@
           <input type="file" id="image" name="image" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-400 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100">
         </div>
 
-        <!-- Status Toggle Switch -->
-        <div class="mb-4 flex items-center">
-          <label class="block text-sm font-medium text-gray-700 mr-2">Status</label>
-          <label for="status" class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" id="status" name="status" class="sr-only peer">
-            <div class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-indigo-600 peer-focus:ring-2 peer-focus:ring-indigo-500 peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition"></div>
-          </label>
-        </div>
-
         <!-- Categories -->
         <div class="mb-4">
           <label for="categories" class="block text-sm font-medium text-gray-700">Categories</label>
@@ -74,7 +65,9 @@
         <!-- Tags (Multi-Select Dropdown) -->
         <div class="mb-4">
           <label for="tags" class="block text-sm font-medium text-gray-700">Tags</label>
-          <select id="tags" name="tags[]" multiple class="mt-1 block w-full border border-gray-400 rounded-md px-4 py-2 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500 text-base"></select>
+          <select id="tags" name="tags[]" multiple class="mt-1 block w-full border border-gray-400 rounded-md px-4 py-2 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500 text-base">
+            <option value="">Select tags...</option>
+          </select>
         </div>
 
         <!-- Save Button -->
@@ -92,32 +85,36 @@
 
   </main>
 
-  <script src="../assets/js/script.js"></script>
+  <!-- Load JavaScript -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/choices.js/10.2.0/choices.min.js"></script>
+  <script defer src="../assets/js/script.js"></script>
 
-  <!-- Choices.js for Multi-Select Tags -->
-  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const tagSelect = new Choices("#tags", {
-        removeItemButton: true,
-        placeholder: true,
-        placeholderValue: "Select or add tags...",
-      });
+    document.addEventListener("DOMContentLoaded", function () {
+      const tagElement = document.querySelector("#tags");
 
-      // Dummy data untuk tags
-      const dummyTags = [
-        { value: "javascript", label: "JavaScript" },
-        { value: "php", label: "PHP" },
-        { value: "laravel", label: "Laravel" },
-        { value: "react", label: "React" },
-        { value: "vue", label: "Vue.js" },
-        { value: "tailwind", label: "Tailwind CSS" },
-        { value: "nodejs", label: "Node.js" },
-      ];
+      if (tagElement) {
+        const tagSelect = new Choices(tagElement, {
+          removeItemButton: true,
+          placeholder: true,
+          placeholderValue: "Select or add tags...",
+          duplicateItemsAllowed: false,
+          allowHTML: false,
+        });
 
-      dummyTags.forEach(tag => {
-        tagSelect.setChoices([{ value: tag.value, label: tag.label }], "value", "label", true);
-      });
+        // Tambahkan pilihan dummy
+        const dummyTags = [
+          { value: "javascript", label: "JavaScript" },
+          { value: "php", label: "PHP" },
+          { value: "laravel", label: "Laravel" },
+          { value: "react", label: "React" },
+          { value: "vue", label: "Vue.js" },
+          { value: "tailwind", label: "Tailwind CSS" },
+          { value: "nodejs", label: "Node.js" },
+        ];
+
+        tagSelect.setChoices(dummyTags, "value", "label", true);
+      }
     });
   </script>
 
