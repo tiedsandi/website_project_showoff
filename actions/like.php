@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../inc/db_connect.php'; // Pastikan file ini berisi koneksi ke database
+// include '../inc/db_connect.php'; // Pastikan file ini berisi koneksi ke database
 
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
