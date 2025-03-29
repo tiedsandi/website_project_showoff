@@ -64,7 +64,7 @@
                         toastConfig.backgroundColor = "linear-gradient(to right, #00b09b, #96c93d)";
                         Toastify(toastConfig).showToast();
                         setTimeout(function() {
-                            window.location.href = "index.php"; // Alihkan ke index.php setelah login berhasil
+                            window.location.href = "pages/index.php"; // Alihkan ke index.php setelah login berhasil
                         }, 3000);
                     } else {
                         toastConfig.backgroundColor = "linear-gradient(to right, #ff5f6d, #ffc371)";
